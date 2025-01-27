@@ -1,6 +1,6 @@
 services:
   app:
-    image: thomasjiitak/node:latest
+    image: thomasjiitak/learn:latest
     deploy:
       replicas: 2
       update_config:
@@ -12,3 +12,5 @@ services:
           memory: 50M
       restart_policy:
         condition: on-failure
+    ports:
+      - "80:8000"
