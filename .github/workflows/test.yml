@@ -40,4 +40,4 @@ jobs:
 
       - name: SSH and run commands
         run: |
-          ssh -o StrictHostKeyChecking=no devops@100.108.157.41 "echo 'SSH connection successful'"
+          ssh -o StrictHostKeyChecking=no shyamsankarkr@100.108.157.41 "echo 'SSH connection successful'"
