@@ -37,10 +37,6 @@ jobs:
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      
-      - name: Add Target Machine to Known Hosts
-        run: |
-          ssh-keyscan -H 100.108.157.41 >> ~/.ssh/known_hosts
 
       - name: SSH and run commands
         run: |
