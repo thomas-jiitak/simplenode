@@ -1,0 +1,57 @@
+version: "3.7"
+services:
+  ems:
+    container_name: EMS
+    image: index.docker.io/jiitakinc/ems:latest
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - django
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_BROKER_URL=amqp://admin:mypass@rabbitmq:5672/ems-ebay-production
+    command: uwsgi --ini /app/deployment/uwsgi.ini
+
+  rabbitmq:
+    container_name: RabbitMQ
+    image: bitnami/rabbitmq:latest
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - django
+
+  celery-master:
+    container_name: CeleryMaster
+    image: index.docker.io/jiitakinc/ems:latest
+    networks:
+      - django
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_BROKER_URL=amqp://admin:mypass@rabbitmq:5672/ems-ebay-production
+    command: celery -A ebay_web beat --scheduler django_celery_beat.schedulers:DatabaseScheduler --loglevel=INFO --pidfile /tmp/celerybeat.pid
+
+  celery-worker:
+    container_name: CeleryWorker
+    image: index.docker.io/jiitakinc/ems:latest
+    networks:
+      - django
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_BROKER_URL=amqp://admin:mypass@rabbitmq:5672/ems-ebay-production
+    command: >
+      sh -c "
+      CPU_CORES=$(nproc) && 
+      CONCURRENCY=$((CPU_CORES * 4)) &&
+      celery -A ebay_web worker --loglevel=INFO -P threads --concurrency=${CONCURRENCY} -Q celery,manual,manual_main
+      "
+
+networks:
+  django:
