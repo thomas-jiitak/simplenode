@@ -34,7 +34,7 @@ jobs:
           platforms: linux/arm64
 
       - name: Remote Docker Runner
-        uses: thomasvjoseph/remote-docker-runner-action@v1.0.0-rc4
+        uses: thomasvjoseph/remote-docker-runner-action@v1.0.0-rc5
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
