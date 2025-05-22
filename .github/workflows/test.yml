@@ -39,7 +39,7 @@ jobs:
           chmod 600 id_rsa
           ssh-keygen -y -f id_rsa > /dev/null && echo "✅ SSH key valid" || echo "❌ SSH key invalid"
         env:
-          REMOTE_SSH_PRIVATE_KEY: ${{ secrets.REMOTE_SSH_PRIVATE_KEY }}
+          REMOTE_SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       # - name: Remote Docker Runner
       #   uses: thomasvjoseph/remote-docker-runner-action@v1.0.0-rct1.2
