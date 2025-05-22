@@ -23,22 +23,14 @@ jobs:
           username: ${{secrets.DOCKER_USERNAME}}
           password: ${{secrets.DOCKER_PASSWORD}}
 
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          file: ./Dockerfile
-          push: true
-          tags: ${{env.IMAGE_NAME}}
-          cache-from: type=registry,ref=${{env.IMAGE_NAME}}
-          cache-to: type=inline
-
-      # - name: Setup SSH Key
-      #   run: |
-      #     echo "$REMOTE_SSH_PRIVATE_KEY" > id_rsa
-      #     chmod 600 id_rsa
-      #     ssh-keygen -y -f id_rsa > /dev/null && echo "✅ SSH key valid" || echo "❌ SSH key invalid"
-      #   env:
-      #     REMOTE_SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      # - name: Build and push
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     file: ./Dockerfile
+      #     push: true
+      #     tags: ${{env.IMAGE_NAME}}
+      #     cache-from: type=registry,ref=${{env.IMAGE_NAME}}
+      #     cache-to: type=inline
 
       - name: Remote Docker Runner
         uses: thomasvjoseph/remote-docker-runner-action@v1.0.0-rct1.7
@@ -50,3 +42,4 @@ jobs:
           container_name: test-app
           docker_username: ${{secrets.DOCKER_USERNAME}}
           docker_password: ${{secrets.DOCKER_PASSWORD}}
+          docker_ports: "-p 80:80"
