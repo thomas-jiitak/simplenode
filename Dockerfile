@@ -1,17 +1,18 @@
-FROM node:18-alpine
+# Use official Node.js LTS base image
+FROM node:18
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+# Create app directory
+WORKDIR /usr/src/app
 
-WORKDIR /home/node/app
-
+# Install app dependencies
 COPY package*.json ./
-
-USER node
-
 RUN npm install
 
-COPY --chown=node:node . .
+# Copy app source code
+COPY . .
 
+# Expose port (make sure this matches your app)
 EXPOSE 80
 
-CMD [ "node", "app.js" ]
+# Run the app
+CMD ["node", "app.js"]
