@@ -42,7 +42,7 @@ jobs:
       #     REMOTE_SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Remote Docker Runner
-        uses: thomasvjoseph/remote-docker-runner-action@v1.0.0-rct1.6
+        uses: thomasvjoseph/remote-docker-runner-action@v1.0.0-rct1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
