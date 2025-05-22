@@ -4,6 +4,7 @@ on:
     branches: [ "main" ]
 env:
   IMAGE_NAME: thomasjiitak/learn:latest
+  KEY: ${{ vars.KEY }}
 jobs:
   build-push-docker:
     runs-on: ubuntu-latest
@@ -43,3 +44,5 @@ jobs:
           docker_username: ${{secrets.DOCKER_USERNAME}}
           docker_password: ${{secrets.DOCKER_PASSWORD}}
           docker_ports: "-p 80:80"
+          env_vars: |
+            - KEY=${{ vars.KEY }}
