@@ -33,11 +33,13 @@ jobs:
           cache-to: type=inline
           platforms: linux/arm64
 
-      - name: webfactory/ssh-agent
-        uses: webfactory/ssh-agent@v0.9.0
+      - name: Remote Docker Runner
+        uses: thomasvjoseph/remote-docker-runner-action@v1.0.0-rc1
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: SSH and run commands
-        run: |
-          ssh -o StrictHostKeyChecking=no shyamsankarkr@100.108.157.41 "echo 'SSH connection successful'"
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          image: thomasjiitak/learn
+          container_name: test-app
+          docker_username: ${{secrets.DOCKER_USERNAME}}
+          docker_password: ${{secrets.DOCKER_PASSWORD}}
