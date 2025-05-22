@@ -33,13 +33,13 @@ jobs:
       #     cache-to: type=inline
       #     platforms: linux/arm64
 
-      - name: Validate SSH Key
+      - name: Setup SSH Key
         run: |
-          echo "$REMOTE_SSH_PRIVATE_KEY" | base64 -d > id_rsa
+          echo "$REMOTE_SSH_PRIVATE_KEY" > id_rsa
           chmod 600 id_rsa
           ssh-keygen -y -f id_rsa > /dev/null && echo "✅ SSH key valid" || echo "❌ SSH key invalid"
         env:
-          REMOTE_SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_SSH_PRIVATE_KEY: ${{ secrets.REMOTE_SSH_PRIVATE_KEY }}
 
       # - name: Remote Docker Runner
       #   uses: thomasvjoseph/remote-docker-runner-action@v1.0.0-rct1.2
