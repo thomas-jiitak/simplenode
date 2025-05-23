@@ -36,7 +36,7 @@ jobs:
           cache-to: type=inline
 
       - name: Remote Docker Runner
-        uses: thomasvjoseph/ssh-docker@v1.0.0-rct1.8
+        uses: thomasvjoseph/ssh-docker@v1.0.0
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
