@@ -5,9 +5,11 @@ on:
 env:
   IMAGE_NAME: thomasjiitak/learn:latest
   KEY: ${{ vars.KEY }}
+  PASSWORD: ${{ vars.PASSWORD }}
 jobs:
   build-push-docker:
     runs-on: ubuntu-latest
+    environment: test
     permissions:
       issues: write
       id-token: write
@@ -34,7 +36,7 @@ jobs:
           cache-to: type=inline
 
       - name: Remote Docker Runner
-        uses: thomasvjoseph/remote-docker-runner-action@v1.0.0-rct1.7
+        uses: thomasvjoseph/ssh-docker@v1.0.0-rct1.8
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -46,3 +48,4 @@ jobs:
           docker_ports: "-p 80:80"
           env_vars: |
             - KEY=${{ vars.KEY }}
+            - PASSWORD=${{ vars.PASSWORD }}

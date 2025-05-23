@@ -7,6 +7,7 @@ const app = express();
 dotenv.config();
 
 const KEY = process.env.KEY;
+const PASSWORD = process.env.PASSWORD;
 
 app.get('/', (req, res) => {
     res.send(`Hello World! from Node.Js + Changes ${KEY}`);
