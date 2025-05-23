@@ -10,7 +10,7 @@ const KEY = process.env.KEY;
 const PASSWORD = process.env.PASSWORD;
 
 app.get('/', (req, res) => {
-    res.send(`Hello World! from Node.Js + Changes ${KEY}`);
+    res.send(`Hello World! from Node.Js + Changes ${KEY} ${PASSWORD}`);
 });
 
 app.listen(80, '0.0.0.0', () => {
